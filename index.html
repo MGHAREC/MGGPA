@@ -1,0 +1,108 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍽️ Gestion Production Alimentaire</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <h1>🍽️ Gestion Production</h1>
+            <form id="login-form">
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Mot de passe" required>
+                <button type="submit">Se connecter</button>
+            </form>
+            <p><a href="#" id="show-setup">Première utilisation ?</a></p>
+        </div>
+    </div>
+
+    <div id="setup-screen" class="screen">
+        <div class="setup-container">
+            <h2>Configuration Admin</h2>
+            <form id="setup-form">
+                <input type="email" id="admin-email" placeholder="Email admin" required>
+                <input type="password" id="admin-password" placeholder="Mot de passe (6 caractères min)" required>
+                <input type="text" id="admin-nom" placeholder="Nom" required>
+                <input type="text" id="admin-prenom" placeholder="Prénom" required>
+                <button type="submit">Créer l'administration</button>
+                <button type="button" id="back-to-login">Retour</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="app-screen" class="screen">
+        <header class="app-header">
+            <h1>🍽️ Gestion Production</h1>
+            <div>
+                <button id="scan-btn">📷 Scanner</button>
+                <span id="current-user"></span>
+                <button id="logout-btn">Déconnexion</button>
+            </div>
+        </header>
+
+        <nav class="main-nav">
+            <button class="nav-btn active" data-tab="dashboard">📊 Tableau de Bord</button>
+            <button class="nav-btn" data-tab="stock">📦 Matières Premières</button>
+            <button class="nav-btn" data-tab="production">🏭 Ordres Fabrication</button>
+            <button class="nav-btn" data-tab="produits-finis">📦 Produits Finis</button>
+            <button class="nav-btn" data-tab="fournisseurs">🏢 Fournisseurs</button>
+        </nav>
+
+        <main class="main-content">
+            <div id="dashboard" class="tab-content active">
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Matières Premières</h3>
+                        <div class="stat-number" id="stat-mp">0</div>
+                    </div>
+                    <div class="card">
+                        <h3>OF du Jour</h3>
+                        <div class="stat-number" id="stat-of">0</div>
+                    </div>
+                    <div class="card">
+                        <h3>Alertes</h3>
+                        <div class="stat-number" id="stat-alertes">0</div>
+                    </div>
+                </div>
+                <div id="alerts-container"></div>
+            </div>
+
+            <div id="stock" class="tab-content">
+                <div class="toolbar">
+                    <button id="add-matiere-premiere" class="btn-primary">➕ Ajouter</button>
+                    <input type="text" id="search-stock" placeholder="🔍 Rechercher...">
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Nom</th>
+                            <th>Stock</th>
+                            <th>Fournisseur</th>
+                            <th>DLC</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stock-table-body"></tbody>
+                </table>
+            </div>
+
+            <!-- Les autres onglets suivent le même pattern -->
+        </main>
+    </div>
+
+    <script src="js/firebase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/stock.js"></script>
+    <script src="js/production.js"></script>
+</body>
+</html>

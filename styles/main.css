@@ -1,0 +1,70 @@
+/* styles/main.css */
+:root {
+    --primary: #2c5530;
+    --primary-dark: #1e3a23;
+    --secondary: #f8f9fa;
+    --accent: #e9c46a;
+    --danger: #e76f51;
+    --success: #2a9d8f;
+    --text: #333;
+    --border: #dee2e6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; }
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+.login-container, .setup-container {
+    max-width: 400px; margin: 100px auto; padding: 2rem;
+    background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.form-group input { width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 5px; }
+
+.btn-primary {
+    background: var(--primary); color: white; border: none; 
+    padding: 0.75rem 1.5rem; border-radius: 5px; cursor: pointer; width: 100%;
+}
+.btn-primary:hover { background: var(--primary-dark); }
+
+.app-header {
+    background: white; padding: 1rem 2rem; display: flex; 
+    justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.main-nav {
+    background: var(--primary); padding: 0 2rem; display: flex; gap: 0;
+}
+.nav-btn {
+    background: none; border: none; color: white; padding: 1rem 1.5rem;
+    cursor: pointer; border-bottom: 3px solid transparent;
+}
+.nav-btn:hover, .nav-btn.active { background: var(--primary-dark); border-bottom-color: var(--accent); }
+
+.main-content { padding: 2rem; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.cards-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem; margin-bottom: 2rem;
+}
+.card { background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.stat-number { font-size: 2rem; font-weight: bold; color: var(--primary); }
+
+.data-table {
+    width: 100%; background: white; border-radius: 8px; 
+    overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.data-table th, .data-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+.data-table th { background: var(--primary); color: white; }
+
+.alert {
+    padding: 1rem; border-radius: 5px; margin-bottom: 1rem;
+}
+.alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+.alert-danger { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
