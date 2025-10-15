@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,78 +11,154 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
 </head>
 <body>
+    <!-- Écran de Connexion -->
     <div id="login-screen" class="screen active">
         <div class="login-container">
-            <h1>🍽️ Gestion Production</h1>
-            <form id="login-form">
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Mot de passe" required>
-                <button type="submit">Se connecter</button>
+            <div class="login-header">
+                <h1>🍽️ Gestion Production</h1>
+                <p>Système intégré de gestion alimentaire HACCP</p>
+            </div>
+            
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required placeholder="votre@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" required placeholder="Votre mot de passe">
+                </div>
+                
+                <button type="submit" class="btn-primary" id="login-btn">
+                    <span id="login-text">Se connecter</span>
+                    <span id="login-spinner" class="spinner" style="display: none;"></span>
+                </button>
             </form>
-            <p><a href="#" id="show-setup">Première utilisation ?</a></p>
+            
+            <div class="login-footer">
+                <p>Première utilisation ? <a href="#" id="show-setup">Configurer l'application</a></p>
+            </div>
         </div>
     </div>
 
+    <!-- Écran de Configuration Initiale -->
     <div id="setup-screen" class="screen">
         <div class="setup-container">
-            <h2>Configuration Admin</h2>
+            <h2>⚙️ Configuration Initiale</h2>
+            <p>Créez le compte administrateur</p>
+            
             <form id="setup-form">
-                <input type="email" id="admin-email" placeholder="Email admin" required>
-                <input type="password" id="admin-password" placeholder="Mot de passe (6 caractères min)" required>
-                <input type="text" id="admin-nom" placeholder="Nom" required>
-                <input type="text" id="admin-prenom" placeholder="Prénom" required>
-                <button type="submit">Créer l'administration</button>
-                <button type="button" id="back-to-login">Retour</button>
+                <div class="form-group">
+                    <label for="admin-email">Email administrateur</label>
+                    <input type="email" id="admin-email" required placeholder="admin@entreprise.fr">
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-password">Mot de passe</label>
+                    <input type="password" id="admin-password" required minlength="6" placeholder="6 caractères minimum">
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-nom">Nom</label>
+                    <input type="text" id="admin-nom" required placeholder="Votre nom">
+                </div>
+                
+                <div class="form-group">
+                    <label for="admin-prenom">Prénom</label>
+                    <input type="text" id="admin-prenom" required placeholder="Votre prénom">
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Créer l'administration</button>
+                    <button type="button" class="btn-secondary" id="back-to-login">Retour</button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Application Principale -->
     <div id="app-screen" class="screen">
+        <!-- Header -->
         <header class="app-header">
-            <h1>🍽️ Gestion Production</h1>
-            <div>
-                <button id="scan-btn">📷 Scanner</button>
-                <span id="current-user"></span>
-                <button id="logout-btn">Déconnexion</button>
+            <div class="header-left">
+                <button id="menu-toggle" class="btn-icon">☰</button>
+                <h1>🍽️ Gestion Production</h1>
+                <span id="current-user" class="user-info"></span>
+            </div>
+            <div class="header-right">
+                <button id="scan-btn" class="btn-scan">📷 Scanner</button>
+                <div class="notifications">
+                    <button id="notif-btn" class="btn-icon">🔔</button>
+                    <span id="notif-count" class="notif-badge">0</span>
+                </div>
+                <button id="logout-btn" class="btn-secondary">Déconnexion</button>
             </div>
         </header>
 
-        <nav class="main-nav">
-            <button class="nav-btn active" data-tab="dashboard">📊 Tableau de Bord</button>
-            <button class="nav-btn" data-tab="stock">📦 Matières Premières</button>
-            <button class="nav-btn" data-tab="production">🏭 Ordres Fabrication</button>
-            <button class="nav-btn" data-tab="produits-finis">📦 Produits Finis</button>
-            <button class="nav-btn" data-tab="fournisseurs">🏢 Fournisseurs</button>
+        <!-- Navigation -->
+        <nav id="main-nav" class="main-nav">
+            <button class="nav-btn active" data-tab="dashboard">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Tableau de Bord</span>
+            </button>
+            <button class="nav-btn" data-tab="stock">
+                <span class="nav-icon">📦</span>
+                <span class="nav-text">Matières Premières</span>
+            </button>
+            <button class="nav-btn" data-tab="production">
+                <span class="nav-icon">🏭</span>
+                <span class="nav-text">Ordres Fabrication</span>
+            </button>
+            <button class="nav-btn" data-tab="produits-finis">
+                <span class="nav-icon">🏷️</span>
+                <span class="nav-text">Produits Finis</span>
+            </button>
+            <button class="nav-btn" data-tab="fournisseurs">
+                <span class="nav-icon">🏢</span>
+                <span class="nav-text">Fournisseurs</span>
+            </button>
         </nav>
 
+        <!-- Contenu Principal -->
         <main class="main-content">
+            <!-- Tableau de Bord -->
             <div id="dashboard" class="tab-content active">
                 <div class="cards-grid">
                     <div class="card">
                         <h3>Matières Premières</h3>
                         <div class="stat-number" id="stat-mp">0</div>
+                        <p>Produits en stock</p>
                     </div>
                     <div class="card">
                         <h3>OF du Jour</h3>
                         <div class="stat-number" id="stat-of">0</div>
+                        <p>Ordres de fabrication</p>
                     </div>
                     <div class="card">
                         <h3>Alertes</h3>
                         <div class="stat-number" id="stat-alertes">0</div>
+                        <p>Stocks faibles</p>
                     </div>
                 </div>
-                <div id="alerts-container"></div>
+                
+                <h3>📢 Alertes en Cours</h3>
+                <div id="alerts-container">
+                    <div class="alert alert-success">✅ Aucune alerte pour le moment</div>
+                </div>
             </div>
 
+            <!-- Matières Premières -->
             <div id="stock" class="tab-content">
                 <div class="toolbar">
-                    <button id="add-matiere-premiere" class="btn-primary">➕ Ajouter</button>
+                    <button id="add-matiere-premiere" class="btn-primary">➕ Ajouter Matière Première</button>
                     <input type="text" id="search-stock" placeholder="🔍 Rechercher...">
                 </div>
+                
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Code</th>
+                            <th>Code-Barres</th>
                             <th>Nom</th>
                             <th>Stock</th>
                             <th>Fournisseur</th>
@@ -91,18 +166,127 @@
                             <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="stock-table-body"></tbody>
+                    <tbody id="stock-table-body">
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Chargement...</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 
-            <!-- Les autres onglets suivent le même pattern -->
+            <!-- Ordres Fabrication -->
+            <div id="production" class="tab-content">
+                <div class="toolbar">
+                    <button id="add-of" class="btn-primary">➕ Nouvel Ordre de Fabrication</button>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>N° OF</th>
+                            <th>Produit</th>
+                            <th>Quantité</th>
+                            <th>Produit</th>
+                            <th>Statut</th>
+                            <th>Date Création</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="of-table-body">
+                        <tr>
+                            <td colspan="7" style="text-align: center;">Chargement...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Produits Finis -->
+            <div id="produits-finis" class="tab-content">
+                <div class="toolbar">
+                    <button id="add-produit-fini" class="btn-primary">➕ Nouveau Produit Fini</button>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Référence</th>
+                            <th>Nom</th>
+                            <th>Stock Actuel</th>
+                            <th>Stock Cible</th>
+                            <th>Prix de Vente</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="produits-finis-table-body">
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Chargement...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Fournisseurs -->
+            <div id="fournisseurs" class="tab-content">
+                <div class="toolbar">
+                    <button id="add-fournisseur" class="btn-primary">➕ Nouveau Fournisseur</button>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Contact</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Délai Livraison</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fournisseurs-table-body">
+                        <tr>
+                            <td colspan="6" style="text-align: center;">Chargement...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </main>
+
+        <!-- Modal Scanner -->
+        <div id="scan-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>📷 Scanner Code-Barres</h2>
+                <div id="scanner-container">
+                    <p>Placez le code-barres devant la caméra</p>
+                    <div id="camera-feed"></div>
+                </div>
+                <div class="manual-input">
+                    <input type="text" id="manual-barcode" placeholder="Ou saisir le code-barres manuellement">
+                    <button id="confirm-scan" class="btn-primary">Confirmer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div id="notifications-panel" class="notifications-panel">
+            <div class="notifications-header">
+                <h3>Notifications</h3>
+                <button id="clear-notifs" class="btn-small">Tout effacer</button>
+            </div>
+            <div id="notifications-list" class="notifications-list">
+                <div class="alert alert-info">Aucune notification</div>
+            </div>
+        </div>
     </div>
 
+    <!-- Chargement des Scripts -->
     <script src="js/firebase-config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
     <script src="js/stock.js"></script>
     <script src="js/production.js"></script>
+    <script src="js/produitsFinis.js"></script>
+    <script src="js/fournisseurs.js"></script>
+    <script src="js/scan.js"></script>
 </body>
 </html>
